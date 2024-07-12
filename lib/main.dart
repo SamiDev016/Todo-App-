@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapplication/view/home/widget/home_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,16 +54,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const Aa(),
+      home: const HomeView(),
     );
   }
 }
 
-class Aa extends StatelessWidget {
-  const Aa({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
