@@ -1,12 +1,13 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:todoapplication/extentions/space_exs.dart';
 import 'package:todoapplication/utils/app_colors.dart';
 import 'package:todoapplication/utils/app_str.dart';
 import 'package:todoapplication/utils/constants.dart';
-import 'package:todoapplication/view/home/widget/fab.dart';
+import 'package:todoapplication/view/home/components/fab.dart';
+import 'package:todoapplication/view/home/components/home_app_bar.dart';
 import 'package:todoapplication/view/home/widget/task_widget.dart';
 
 class HomeView extends StatefulWidget {
@@ -17,7 +18,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
   final List<int> testing = [];
   @override
   Widget build(BuildContext context) {
@@ -26,10 +26,19 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: Fab(),
-      body: _buildHomeBody(textTheme),
+      body: SliderDrawer(
+        slider: Container(
+          decoration: const BoxDecoration(
+            color: Colors.red
+          ),
+        ),
+
+        appBar: const HomeAppBar(),
+        
+        child: _buildHomeBody(textTheme),
+      ),
     );
   }
-
 
   //Home body
   Widget _buildHomeBody(TextTheme textTheme) {
@@ -52,8 +61,7 @@ class _HomeViewState extends State<HomeView> {
                   child: CircularProgressIndicator(
                     value: 0.3,
                     backgroundColor: Colors.grey,
-                    valueColor:
-                        AlwaysStoppedAnimation(AppColors.primaryColor),
+                    valueColor: AlwaysStoppedAnimation(AppColors.primaryColor),
                   ),
                 ),
                 25.w,
@@ -87,58 +95,49 @@ class _HomeViewState extends State<HomeView> {
 
           //TASKS
           SizedBox(
-            height: 600,
-            width: double.infinity,
-            child: testing.isNotEmpty? ListView.builder(
-                itemCount: testing.length,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return Dismissible(
-                    direction: DismissDirection.horizontal,
-                    onDismissed: (_){
-                      //amks,dmas
-                    },
-                    background: Row(
+              height: 300,
+              width: double.infinity,
+              child: testing.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: testing.length,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) {
+                        return Dismissible(
+                            direction: DismissDirection.horizontal,
+                            onDismissed: (_) {
+                              //amks,dmas
+                            },
+                            background: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                8.w,
+                                const Text(AppStr.deleteTask)
+                              ],
+                            ),
+                            key: Key(index.toString()),
+                            child: const TaskWidget());
+                      })
+                  : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.delete,
-                          color: Colors.red,
+                        FadeInUp(
+                          child: SizedBox(
+                            width: 200,
+                            height: 200,
+                            child: Lottie.asset(lottieUrl,
+                                animate: testing.isNotEmpty ? false : true),
+                          ),
                         ),
-                        8.w,
-                        const Text(
-                          AppStr.deleteTask
+                        FadeInUp(
+                          from: 30,
+                          child: const Text(AppStr.doneAllTask),
                         )
                       ],
-                    ),
-                    key: Key(index.toString()),
-                    child: const TaskWidget());
-                }) : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FadeInUp(
-                      child: SizedBox(
-                        width: 200,
-                        height: 200,
-                        child: Lottie.asset(lottieUrl,
-                        animate: testing.isNotEmpty ? false : true
-                        ),
-                        
-                      ),
-                      
-                    ),
-                    FadeInUp(
-                      from: 30,
-
-                      child: const Text(
-                        AppStr.doneAllTask
-                      ),
-                    )
-                  ],
-                )
-                
-                
-          )
+                    ))
         ],
       ),
     );
