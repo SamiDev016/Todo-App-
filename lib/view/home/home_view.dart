@@ -8,6 +8,7 @@ import 'package:todoapplication/utils/app_str.dart';
 import 'package:todoapplication/utils/constants.dart';
 import 'package:todoapplication/view/home/components/fab.dart';
 import 'package:todoapplication/view/home/components/home_app_bar.dart';
+import 'package:todoapplication/view/home/components/slider_drawer.dart';
 import 'package:todoapplication/view/home/widget/task_widget.dart';
 
 class HomeView extends StatefulWidget {
@@ -18,6 +19,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  GlobalKey<SliderDrawerState> drawerKey = GlobalKey<SliderDrawerState>();
   final List<int> testing = [];
   @override
   Widget build(BuildContext context) {
@@ -27,13 +29,12 @@ class _HomeViewState extends State<HomeView> {
       backgroundColor: Colors.white,
       floatingActionButton: Fab(),
       body: SliderDrawer(
-        slider: Container(
-          decoration: const BoxDecoration(
-            color: Colors.red
-          ),
-        ),
+        key: drawerKey,
+        isDraggable: false,
+        animationDuration: 1000,
+        slider:  CustomDrawer(),
 
-        appBar: const HomeAppBar(),
+        appBar: HomeAppBar(drawerKey: drawerKey),
         
         child: _buildHomeBody(textTheme),
       ),
@@ -55,6 +56,7 @@ class _HomeViewState extends State<HomeView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
                 const SizedBox(
                   width: 25,
                   height: 25,

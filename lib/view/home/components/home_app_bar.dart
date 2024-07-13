@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
 class HomeAppBar extends StatefulWidget {
-  const HomeAppBar({super.key});
+  const HomeAppBar({super.key, required this.drawerKey});
+
+  final GlobalKey<SliderDrawerState> drawerKey;
 
   @override
   State<HomeAppBar> createState() => _HomeAppBarState();
@@ -32,8 +35,10 @@ class _HomeAppBarState extends State<HomeAppBar> with SingleTickerProviderStateM
       isDrawerOpen = !isDrawerOpen;
       if (isDrawerOpen) {
         animateController.forward();
+        widget.drawerKey.currentState?.openSlider();
       } else {
         animateController.reverse();
+        widget.drawerKey.currentState?.closeSlider();
       }
     });
   }
@@ -49,6 +54,7 @@ class _HomeAppBarState extends State<HomeAppBar> with SingleTickerProviderStateM
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: IconButton(
@@ -66,7 +72,7 @@ class _HomeAppBarState extends State<HomeAppBar> with SingleTickerProviderStateM
               padding: const EdgeInsets.only(right: 20),
               child: IconButton(
                 onPressed: (){
-                  
+
                 },
                 icon: Icon(
                   CupertinoIcons.trash_fill
