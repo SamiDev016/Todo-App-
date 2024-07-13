@@ -3,6 +3,7 @@ import 'package:todoapplication/extentions/space_exs.dart';
 import 'package:todoapplication/utils/app_colors.dart';
 import 'package:todoapplication/utils/app_str.dart';
 import 'package:todoapplication/view/home/widget/fab.dart';
+import 'package:todoapplication/view/home/widget/task_widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -79,32 +80,7 @@ class _HomeViewState extends State<HomeView> {
                   itemCount: 20,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
-                    return AnimatedContainer(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 16),
-                      duration: const Duration(microseconds: 600),
-                      decoration: BoxDecoration(
-                          color: AppColors.primaryColor.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(.1),
-                                offset: const Offset(0, 4),
-                                blurRadius: 10)
-                          ]),
-                      child: ListTile(
-                        leading: AnimatedContainer(
-                            duration: const Duration(milliseconds: 600),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              shape: BoxShape.circle,
-                              border: Border.all(color: Colors.grey,width: .8),
-
-                            ),
-                            child: const Icon(Icons.check,color: Colors.white,),
-                            ),
-                      ),
-                    );
+                    return const TaskWidget();
                   }),
             )
           ],
