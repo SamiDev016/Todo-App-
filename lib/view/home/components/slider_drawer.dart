@@ -42,15 +42,22 @@ class CustomDrawer extends StatelessWidget {
           Text("Flutter Dev", style: textTheme.displaySmall,),
 
           Container(
+            margin: const EdgeInsets.symmetric(vertical: 30,horizontal: 10),
             width: double.infinity,
             height: 300,
             child: ListView.builder(
               itemCount: icons.length,
               itemBuilder: (BuildContext context,int index){
-              return Container(
-                child: ListTile(
-                  leading: Icon(icons[index],color: Colors.white,size: 30,),
-                  title: Text(texts[index]),
+              return InkWell(
+                onTap: (){
+
+                },
+                child: Container(
+                  margin: EdgeInsets.all(3),
+                  child: ListTile(
+                    leading: Icon(icons[index],color: Colors.white,size: 30,),
+                    title: Text(texts[index],style: const TextStyle(color: Colors.white),),
+                  ),
                 ),
               );
             }),

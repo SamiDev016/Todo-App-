@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoapplication/view/home/home_view.dart';
+import 'package:todoapplication/view/tasks/task_view.dart';
 
 void main() {
   runApp(const MyApp());
