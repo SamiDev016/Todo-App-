@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_cupertino_date_picker_fork/flutter_cupertino_date_picker_fork.dart';
@@ -35,60 +37,71 @@ class _TaskViewState extends State<TaskView> {
               children: [
                 _buildTopSideTexts(textTheme),
                 _buildMainTaskViewActivity(textTheme, context),
-                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Row(
-                    children: [
-                      MaterialButton(
-                        onPressed: () {},
-                        minWidth: 150,
-                        height: 55,
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.close,color: AppColors.primaryColor,),
-                            5.w,
-                            const Text(
-                              "Delete Task",
-                              style: TextStyle(
-                                color: AppColors.primaryColor,
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ),
-
-
-                      MaterialButton(
-                        onPressed: () {},
-                        minWidth: 150,
-                        height: 55,
-                        color: AppColors.primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)
-                        ),
-                        child: const Text(
-                          "Add Task",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-
-
-                    ],
-                  ),
-                )
+                
+                
+                _buildButtomSideButtons(),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildButtomSideButtons() {
+    return Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+
+
+                    MaterialButton(
+                      onPressed: () {
+
+                      },
+                      minWidth: 150,
+                      height: 55,
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.close,color: AppColors.primaryColor,),
+                          5.w,
+                          const Text(
+                            "Delete Task",
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
+
+
+                    MaterialButton(
+                      onPressed: () {},
+                      minWidth: 150,
+                      height: 55,
+                      color: AppColors.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: const Text(
+                        "Add Task",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+
+
+                  ],
+                ),
+              );
   }
 
   Widget _buildMainTaskViewActivity(TextTheme textTheme, BuildContext context) {
