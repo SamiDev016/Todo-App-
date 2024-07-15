@@ -1,9 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todoapplication/data/hive_data_store.dart';
+import 'package:todoapplication/models/task.dart';
 import 'package:todoapplication/view/home/home_view.dart';
-import 'package:todoapplication/view/tasks/task_view.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async{
+
+  await Hive.initFlutter();
+
+  Hive.registerAdapter<Task>(TaskAdapter());
+
+  Box box = await Hive.openBox<Task>(HiveDateStore.boxName);
+
+  for (var task in box.values) {
+      if(task.createdAtTime.day != DateTime.now().day){
+        task.delete();
+      }else{
+
+      }
+    }
+
+
+  runApp(BaseWidget(child: const MyApp()));
+}
+
+class BaseWidget extends InheritedWidget{
+  BaseWidget({Key? key, required this.child}) : super(key : key, child: child) ;
+  final HiveDateStore dataStore = HiveDateStore();
+  final Widget child;
+
+    static BaseWidget of(BuildContext context){
+      final base = context.dependOnInheritedWidgetOfExactType<BaseWidget>();
+      if(base != null){
+        return base;
+      }else{
+        throw StateError('mfhmetch wsh ma3netha hadi based widget');
+      }
+    }
+  
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
+    return false;
+  }
+  
 }
 
 class MyApp extends StatelessWidget {
