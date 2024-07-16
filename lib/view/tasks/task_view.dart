@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_cupertino_date_picker_fork/flutter_cupertino_date_picker_fork.dart';
 import 'package:todoapplication/extentions/space_exs.dart';
+import 'package:todoapplication/models/task.dart';
 import 'package:todoapplication/utils/app_colors.dart';
 import 'package:todoapplication/utils/app_str.dart';
 import 'package:todoapplication/view/tasks/components/date_time_selection.dart';
@@ -10,15 +10,17 @@ import 'package:todoapplication/view/tasks/components/rep_text_field.dart';
 import 'package:todoapplication/view/tasks/widgets/task_view_app_bar.dart';
 
 class TaskView extends StatefulWidget {
-  const TaskView({super.key});
+  const TaskView({super.key, required this.titleTaskController, required this.descTaskController, required this.task});
+  
+  final TextEditingController? titleTaskController;
+  final TextEditingController? descTaskController;
+  final Task? task;
 
   @override
   State<TaskView> createState() => _TaskViewState();
 }
 
 class _TaskViewState extends State<TaskView> {
-  final TextEditingController titleTaskController = TextEditingController();
-  final TextEditingController descTaskController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

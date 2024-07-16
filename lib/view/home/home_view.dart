@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:todoapplication/extentions/space_exs.dart';
+import 'package:todoapplication/models/task.dart';
 import 'package:todoapplication/utils/app_colors.dart';
 import 'package:todoapplication/utils/app_str.dart';
 import 'package:todoapplication/utils/constants.dart';
@@ -20,7 +21,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   GlobalKey<SliderDrawerState> drawerKey = GlobalKey<SliderDrawerState>();
-  final List<int> testing = [];
+  final List<int> testing = [1];
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -32,10 +33,8 @@ class _HomeViewState extends State<HomeView> {
         key: drawerKey,
         isDraggable: false,
         animationDuration: 1000,
-        slider:  CustomDrawer(),
-
+        slider: CustomDrawer(),
         appBar: HomeAppBar(drawerKey: drawerKey),
-        
         child: _buildHomeBody(textTheme),
       ),
     );
@@ -56,7 +55,6 @@ class _HomeViewState extends State<HomeView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 const SizedBox(
                   width: 25,
                   height: 25,
@@ -121,7 +119,15 @@ class _HomeViewState extends State<HomeView> {
                               ],
                             ),
                             key: Key(index.toString()),
-                            child: const TaskWidget());
+                            child: TaskWidget(
+                              task: Task(
+                                  id: "1",
+                                  title: "First Task",
+                                  subTitle: "Learning Flutter",
+                                  createdAtTime: DateTime.now(),
+                                  createdAtDate: DateTime.now(),
+                                  isCompleted: false),
+                            ));
                       })
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
