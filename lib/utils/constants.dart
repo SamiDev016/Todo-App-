@@ -44,7 +44,7 @@ dynamic deleteAllTasks(BuildContext context) {
       confirmButtonText: "YES",
       cancelButtonText: "NO",
       onTapConfirm: (){
-        //BaseWidget.of(context).dataStore.box.clear();
+        BaseWidget.of(context).dataStore.box.clear();
         Navigator.pop(context);
       },
       onTapCancel: (){

@@ -87,6 +87,8 @@ class _TaskViewState extends State<TaskView> {
         widget.descTaskController?.text == subTitle;
 
         widget.task?.save();
+
+        Navigator.pop(context);
       } catch (e) {
         updateTaskWarning(context);
       }
@@ -99,10 +101,16 @@ class _TaskViewState extends State<TaskView> {
           createdAtTime: time
         );
         BaseWidget.of(context).dataStore.addTask(task: task);
+
+        Navigator.pop(context);
       } else {
         emptyWarning(context);
       }
     }
+  }
+
+  dynamic deleteTask(){
+    return widget.task?.delete();
   }
 
   @override
@@ -141,7 +149,10 @@ class _TaskViewState extends State<TaskView> {
           :
 
           MaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              deleteTask();
+              Navigator.pop(context);
+            },
             minWidth: 150,
             height: 55,
             color: Colors.white,
@@ -172,9 +183,9 @@ class _TaskViewState extends State<TaskView> {
             color: AppColors.primaryColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            child: const Text(
-              "Add Task",
-              style: TextStyle(
+            child: Text(
+              isTaskIsAlreadyExist() ? AppStr.addNewTask : AppStr.updateTaskString,
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),

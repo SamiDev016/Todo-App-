@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import 'package:todoapplication/main.dart';
 import 'package:todoapplication/utils/constants.dart';
 
 class HomeAppBar extends StatefulWidget {
@@ -47,6 +48,7 @@ class _HomeAppBarState extends State<HomeAppBar> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    var base =BaseWidget.of(context).dataStore.box;
     return SizedBox(
       height: 130,
       width: double.infinity,
@@ -73,6 +75,7 @@ class _HomeAppBarState extends State<HomeAppBar> with SingleTickerProviderStateM
               padding: const EdgeInsets.only(right: 20),
               child: IconButton(
                 onPressed: (){
+                  base.isEmpty ? noTaskWarning(context) :
                   deleteAllTasks(context);
                 },
                 icon: const Icon(

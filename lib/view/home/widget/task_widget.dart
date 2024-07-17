@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapplication/models/task.dart';
 import 'package:todoapplication/utils/app_colors.dart';
 import 'package:intl/intl.dart';
+import 'package:todoapplication/view/tasks/task_view.dart';
 
 class TaskWidget extends StatefulWidget {
   const TaskWidget({
@@ -16,11 +18,9 @@ class TaskWidget extends StatefulWidget {
 }
 
 class _TaskWidgetState extends State<TaskWidget> {
-
   TextEditingController textEditingControllerForTitle = TextEditingController();
-  TextEditingController textEditingControllerForSubTitle = TextEditingController();
-
-
+  TextEditingController textEditingControllerForSubTitle =
+      TextEditingController();
 
   @override
   void initState() {
@@ -29,12 +29,6 @@ class _TaskWidgetState extends State<TaskWidget> {
     super.initState();
   }
 
-
-
-
-
-
-
   @override
   void dispose() {
     textEditingControllerForTitle.dispose();
@@ -42,11 +36,19 @@ class _TaskWidgetState extends State<TaskWidget> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            CupertinoPageRoute(
+                builder: (ctx) => TaskView(
+                      titleTaskController: textEditingControllerForTitle,
+                      descTaskController: textEditingControllerForSubTitle,
+                      task: widget.task,
+                    )));
+      },
       child: AnimatedContainer(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         duration: const Duration(microseconds: 600),
@@ -67,12 +69,13 @@ class _TaskWidgetState extends State<TaskWidget> {
             onTap: () {
               widget.task.isCompleted = !widget.task.isCompleted;
               widget.task.save();
-              
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 600),
               decoration: BoxDecoration(
-                color: widget.task.isCompleted ? AppColors.primaryColor : Colors.white,
+                color: widget.task.isCompleted
+                    ? AppColors.primaryColor
+                    : Colors.white,
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.grey, width: .8),
               ),
@@ -89,11 +92,13 @@ class _TaskWidgetState extends State<TaskWidget> {
             child: Text(
               textEditingControllerForTitle.text,
               style: TextStyle(
-                  color:
-                      widget.task.isCompleted ? AppColors.primaryColor : Colors.black,
+                  color: widget.task.isCompleted
+                      ? AppColors.primaryColor
+                      : Colors.black,
                   fontWeight: FontWeight.w500,
-                  decoration:
-                      widget.task.isCompleted ? TextDecoration.lineThrough : null),
+                  decoration: widget.task.isCompleted
+                      ? TextDecoration.lineThrough
+                      : null),
             ),
           ),
 
@@ -108,8 +113,9 @@ class _TaskWidgetState extends State<TaskWidget> {
                         ? AppColors.primaryColor
                         : Colors.black,
                     fontWeight: FontWeight.w300,
-                    decoration:
-                        widget.task.isCompleted ? TextDecoration.lineThrough : null),
+                    decoration: widget.task.isCompleted
+                        ? TextDecoration.lineThrough
+                        : null),
               ),
 
               //Date
@@ -123,14 +129,18 @@ class _TaskWidgetState extends State<TaskWidget> {
                       Text(
                         DateFormat('hh:mm a').format(widget.task.createdAtTime),
                         style: TextStyle(
-                          color: widget.task.isCompleted ? Colors.white : Colors.grey,
+                          color: widget.task.isCompleted
+                              ? Colors.white
+                              : Colors.grey,
                           fontSize: 14,
                         ),
                       ),
                       Text(
                         DateFormat.yMMMEd().format(widget.task.createdAtDate),
                         style: TextStyle(
-                          color: widget.task.isCompleted ? Colors.white: Colors.grey,
+                          color: widget.task.isCompleted
+                              ? Colors.white
+                              : Colors.grey,
                           fontSize: 12,
                         ),
                       ),
