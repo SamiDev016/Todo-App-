@@ -5,11 +5,12 @@ class DateTimeWidget extends StatelessWidget {
   const DateTimeWidget({
     super.key,
     required this.onTap,
-    required this.title,
+    required this.title, required this.time,
   });
 
   final VoidCallback onTap;
   final String title;
+  final String time;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class DateTimeWidget extends StatelessWidget {
                   color: Colors.grey.shade100),
               child: Center(
                 child: Text(
-                  title,
+                  time,
                   style: textTheme.titleSmall,
                 ),
               ),

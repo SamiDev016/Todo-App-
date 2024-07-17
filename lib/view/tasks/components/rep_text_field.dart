@@ -5,10 +5,12 @@ import 'package:todoapplication/utils/app_str.dart';
 class RepTextField extends StatelessWidget {
   const RepTextField({
     super.key,
-    required this.controller, this.isForDesc = false,
+    required this.controller, this.isForDesc = false,required this.onFieldSubmitted,required this.onChanged,
   });
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
+  final Function(String)? onFieldSubmitted;
+  final Function(String)? onChanged;
   final bool isForDesc;
 
   @override
@@ -39,12 +41,8 @@ class RepTextField extends StatelessWidget {
             ),
           ),
         
-          onFieldSubmitted: (value){
-        
-          },
-          onChanged: (value){
-        
-          },
+          onFieldSubmitted: onFieldSubmitted,
+          onChanged: onChanged,
         ),
       ),
     );
