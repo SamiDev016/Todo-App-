@@ -64,7 +64,11 @@ class _TaskWidgetState extends State<TaskWidget> {
         child: ListTile(
           //Icon Check or inCheck
           leading: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              widget.task.isCompleted = !widget.task.isCompleted;
+              widget.task.save();
+              
+            },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 600),
               decoration: BoxDecoration(

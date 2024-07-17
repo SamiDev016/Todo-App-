@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker_fork/flutter_cupertino_date_picker_fork.dart';
 import 'package:intl/intl.dart';
 import 'package:todoapplication/extentions/space_exs.dart';
+import 'package:todoapplication/main.dart';
 import 'package:todoapplication/models/task.dart';
 import 'package:todoapplication/utils/app_colors.dart';
 import 'package:todoapplication/utils/app_str.dart';
+import 'package:todoapplication/utils/constants.dart';
 import 'package:todoapplication/view/tasks/components/date_time_selection.dart';
 import 'package:todoapplication/view/tasks/components/rep_text_field.dart';
 import 'package:todoapplication/view/tasks/widgets/task_view_app_bar.dart';
@@ -30,23 +32,25 @@ class _TaskViewState extends State<TaskView> {
   DateTime? time;
   DateTime? date;
 
-  String showTime(DateTime? time){
+  String showTime(DateTime? time) {
     if (widget.task?.createdAtTime == null) {
-      if(time == null){
+      if (time == null) {
         return DateFormat('hh:mm a').format(DateTime.now()).toString();
-      }else{
+      } else {
         return DateFormat('hh:mm a').format(time).toString();
       }
     } else {
-      return DateFormat('hh:mm a').format(widget.task!.createdAtTime).toString();
+      return DateFormat('hh:mm a')
+          .format(widget.task!.createdAtTime)
+          .toString();
     }
   }
 
-  String showDate(DateTime? date){
+  String showDate(DateTime? date) {
     if (widget.task?.createdAtDate == null) {
-      if(date == null){
+      if (date == null) {
         return DateFormat.yMMMEd().format(DateTime.now()).toString();
-      }else{
+      } else {
         return DateFormat.yMMMEd().format(date).toString();
       }
     } else {
@@ -60,6 +64,44 @@ class _TaskViewState extends State<TaskView> {
       return true;
     } else {
       return false;
+    }
+  }
+
+  DateTime showDateAsDateTime(DateTime? date) {
+    if (widget.task?.createdAtDate == null) {
+      if (date == null) {
+        return DateTime.now();
+      } else {
+        return date;
+      }
+    } else {
+      return widget.task!.createdAtDate;
+    }
+  }
+
+  dynamic isTaskAlreadyExistOtherWiseCreate() {
+    if (widget.titleTaskController?.text != null &&
+        widget.descTaskController?.text != null) {
+      try {
+        widget.titleTaskController?.text == title;
+        widget.descTaskController?.text == subTitle;
+
+        widget.task?.save();
+      } catch (e) {
+        updateTaskWarning(context);
+      }
+    } else {
+      if (title != null && subTitle != null) {
+        var task = Task.create(
+          title: title,
+          subTitle: subTitle,
+          createdAtDate: date,
+          createdAtTime: time
+        );
+        BaseWidget.of(context).dataStore.addTask(task: task);
+      } else {
+        emptyWarning(context);
+      }
     }
   }
 
@@ -92,8 +134,12 @@ class _TaskViewState extends State<TaskView> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: isTaskIsAlreadyExist()? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
         children: [
+          isTaskIsAlreadyExist() ? 
+          Container ()
+          :
+
           MaterialButton(
             onPressed: () {},
             minWidth: 150,
@@ -118,7 +164,9 @@ class _TaskViewState extends State<TaskView> {
             ),
           ),
           MaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              isTaskAlreadyExistOtherWiseCreate();
+            },
             minWidth: 150,
             height: 55,
             color: AppColors.primaryColor,
@@ -182,7 +230,7 @@ class _TaskViewState extends State<TaskView> {
                   builder: (_) => SizedBox(
                         height: 280,
                         child: TimePickerWidget(
-                          //initDateTime: ,
+                          initDateTime: showDateAsDateTime(time),
                           onChange: (_, __) {},
                           dateFormat: "HH:mm",
                           onConfirm: (dateTime, _) {
@@ -197,7 +245,6 @@ class _TaskViewState extends State<TaskView> {
                         ),
                       ));
             },
-
             title: AppStr.timeString,
             time: showTime(time),
           ),
@@ -208,19 +255,19 @@ class _TaskViewState extends State<TaskView> {
                 context,
                 maxDateTime: DateTime(2030, 5, 5),
                 minDateTime: DateTime.now(),
-                //initialDateTime: ,
+                initialDateTime: showDateAsDateTime(date),
                 onConfirm: (dateTime, _) {
                   setState(() {
-                              if (widget.task?.createdAtDate == null) {
-                                date = dateTime;
-                              } else {
-                                widget.task!.createdAtDate = dateTime;
-                              }
-                            });
+                    if (widget.task?.createdAtDate == null) {
+                      date = dateTime;
+                    } else {
+                      widget.task!.createdAtDate = dateTime;
+                    }
+                  });
                 },
               );
             },
-            title: AppStr.dateString, 
+            title: AppStr.dateString,
             time: showDate(date),
           ),
         ],

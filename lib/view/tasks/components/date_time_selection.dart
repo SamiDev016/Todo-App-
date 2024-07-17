@@ -5,12 +5,13 @@ class DateTimeWidget extends StatelessWidget {
   const DateTimeWidget({
     super.key,
     required this.onTap,
-    required this.title, required this.time,
+    required this.title, required this.time, this.isTime = false,
   });
 
   final VoidCallback onTap;
   final String title;
   final String time;
+  final bool isTime;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class DateTimeWidget extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(right: 10),
-              width: 80,
+              width: isTime ? 150 : 80,
               height: 35,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
